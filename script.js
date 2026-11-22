@@ -39,6 +39,7 @@ const tabs  = document.querySelectorAll('.tab');
 
 function go(name){
   currentPage = name;
+  const mobileKeyboard = document.getElementById('mobileKeyboard');
   pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
   tabs.forEach(t => t.classList.toggle('active', t.dataset.page === name));
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -46,6 +47,12 @@ function go(name){
   if(name === 'stats') renderStats();
   if(name === 'test') resetTest();
   if(name === 'home') renderHome();
+
+  if((name === 'game' || name === 'test') && window.matchMedia('(max-width: 820px)').matches){
+    setTimeout(() => mobileKeyboard?.focus({ preventScroll: true }), 80);
+  } else {
+    mobileKeyboard?.blur();
+  }
 }
 tabs.forEach(t => t.onclick = () => go(t.dataset.page));
 document.querySelectorAll('[data-goto]').forEach(el => el.onclick = () => go(el.dataset.goto));
@@ -461,6 +468,11 @@ document.getElementById('testReset').onclick = resetTest;
 /* =====================================================
    GLOBAL KEY ROUTER
 ===================================================== */
+const mobileKeyboard = document.getElementById('mobileKeyboard');
+mobileKeyboard?.addEventListener('input', function(){
+  mobileKeyboard.value = '';
+});
+
 window.addEventListener('keydown', function(e){
   if(currentPage === 'game'){
     if(!running && !overOverlay.classList.contains('hidden') && e.key === 'Enter'){
