@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TypePop — Pop Bubbles, Level Up Your Typing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="decor"><span></span><span></span><span></span><span></span><span></span></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="brand"><span class="badge">🫧</span> TypePop</div>
+  <div class="tabs">
+    <button class="tab active" data-page="home">Home</button>
+    <button class="tab" data-page="game">Bubble Pop</button>
+    <button class="tab" data-page="test">Typing Test</button>
+    <button class="tab" data-page="stats">Progress</button>
+    <button class="sound-btn" id="soundBtn" title="Toggle sound">🔊</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section id="page-home" class="page active">
+  <div class="hero">
+    <div>
+      <div class="tagline">🎈 Bubble typing arcade</div>
+      <h1 class="title">Pop bubbles.<br><span class="hl">Level up</span> your typing.</h1>
+      <p class="lead">Meet <b>Poppi</b> — your cheerful typing buddy. Type the words floating on the bubbles before they drift away, and watch your WPM, accuracy and score climb. 60 seconds a round. Zero pressure. Maximum fun.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" data-goto="game">🎮 Play Bubble Pop</button>
+        <button class="btn btn-mint" data-goto="test">⌨️ Take a Typing Test</button>
+      </div>
+      <div class="mini-stats">
+        <div class="mini"><b id="homeBest">0</b><span>Best score</span></div>
+        <div class="mini"><b id="homeWpm">0</b><span>Best WPM</span></div>
+        <div class="mini"><b id="homeGames">0</b><span>Games played</span></div>
+      </div>
+    </div>
+
+    <div class="mascot-wrap">
+      <div class="speech" id="speechBubble">Let's type! ✨</div>
+      <svg class="mascot" viewBox="0 0 240 240" aria-hidden="true">
+        <defs>
+          <radialGradient id="bodyG" cx="35%" cy="28%" r="78%">
+            <stop offset="0%" stop-color="#cdbcff"/>
+            <stop offset="55%" stop-color="#8b6cff"/>
+            <stop offset="100%" stop-color="#5b3ef0"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="120" cy="218" rx="58" ry="10" fill="rgba(34,34,74,.14)"/>
+        <path d="M52 132 q-26 -6 -31 -32" stroke="#22224a" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M188 132 q26 -6 31 -32" stroke="#22224a" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <circle cx="120" cy="120" r="78" fill="url(#bodyG)" stroke="#22224a" stroke-width="7"/>
+        <ellipse cx="92" cy="78" rx="21" ry="13" fill="#fff" opacity=".5" transform="rotate(-25 92 78)"/>
+        <g class="eyes">
+          <ellipse cx="96" cy="116" rx="15" ry="17" fill="#fff" stroke="#22224a" stroke-width="5"/>
+          <ellipse cx="146" cy="116" rx="15" ry="17" fill="#fff" stroke="#22224a" stroke-width="5"/>
+          <circle cx="99" cy="119" r="6.5" fill="#22224a"/>
+          <circle cx="149" cy="119" r="6.5" fill="#22224a"/>
+        </g>
+        <ellipse cx="74" cy="146" rx="13" ry="8" fill="#ff8fb8" opacity=".85"/>
+        <ellipse cx="168" cy="146" rx="13" ry="8" fill="#ff8fb8" opacity=".85"/>
+        <path d="M108 150 q12 15 24 0" stroke="#22224a" stroke-width="6" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <span class="emoji">🫧</span>
+      <h3>Bubble Pop</h3>
+      <p>Words float up like bubbles. Type them to pop them. 60 seconds, 3 lives, endless combo energy.</p>
+    </div>
+    <div class="feature">
+      <span class="emoji">⚡</span>
+      <h3>Live WPM + Accuracy</h3>
+      <p>Your speed and precision update in real time — no guessing, just honest numbers.</p>
+    </div>
+    <div class="feature">
+      <span class="emoji">🏅</span>
+      <h3>Badges &amp; Progress</h3>
+      <p>Unlock achievements, chase your best score, and watch your typing skill grow day by day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GAME ============ -->
+<section id="page-game" class="page">
+  <div class="hud">
+    <div class="pill"><span class="ico">🏆</span><span id="hudScore">0</span></div>
+    <div class="pill"><span class="ico">🔥</span><span id="hudCombo">0</span></div>
+    <div class="pill"><span class="ico">❤️</span><span id="hudLives">3</span></div>
+    <div class="pill"><span class="ico">⏱️</span><span id="hudTime">60</span></div>
+    <div class="pill push"><span class="lbl">WPM</span><span id="hudWpm">0</span></div>
+  </div>
+
+  <div class="play-area" id="playArea">
+    <div class="buffer" id="bufferDisplay">…</div>
+
+    <div class="overlay" id="startOverlay">
+      <div class="overlay-card">
+        <div class="big-emoji">🫧</div>
+        <h2>Ready to pop?</h2>
+        <p>Type the words on the bubbles before they float away.<br>60 seconds &middot; 3 lives &middot; go!</p>
+        <button class="btn btn-primary" id="startBtn">Start Popping →</button>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="overOverlay">
+      <div class="overlay-card">
+        <div class="big-emoji" id="overEmoji">🎉</div>
+        <h2 id="overTitle">Nice popping!</h2>
+        <div class="result-grid">
+          <div class="res"><b id="resScore">0</b><span>Score</span></div>
+          <div class="res"><b id="resWpm">0</b><span>WPM</span></div>
+          <div class="res"><b id="resAcc">0%</b><span>Accuracy</span></div>
+          <div class="res"><b id="resCombo">0</b><span>Best combo</span></div>
+        </div>
+        <p class="over-msg" id="overMsg"></p>
+        <div class="hero-btns" style="justify-content:center;margin:0">
+          <button class="btn btn-primary" id="againBtn">Play again</button>
+          <button class="btn btn-yellow" data-goto="stats">See progress</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="hint">💡 Tip: just start typing — the bubble that matches lights up with a golden outline.</p>
+</section>
+
+<!-- ============ TYPING TEST ============ -->
+<section id="page-test" class="page">
+  <div class="card">
+    <div class="hud">
+      <div class="pill"><span class="ico">⚡</span><span id="tWpm">0</span><span class="lbl">WPM</span></div>
+      <div class="pill"><span class="ico">🎯</span><span id="tAcc">100</span><span class="lbl">% ACC</span></div>
+      <div class="pill"><span class="ico">⏱️</span><span id="tTime">0</span><span class="lbl">SEC</span></div>
+      <button class="btn btn-mint push" id="testReset">↺ Restart</button>
+    </div>
+    <div class="test-text" id="testText"></div>
+    <p class="hint">Click the text and start typing — the timer starts on your first keystroke.</p>
+    <div class="test-result hidden" id="testResult">
+      <div class="result-grid">
+        <div class="res"><b id="tFinalWpm">0</b><span>Final WPM</span></div>
+        <div class="res"><b id="tFinalAcc">0%</b><span>Accuracy</span></div>
+      </div>
+      <p class="over-msg" id="tMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section id="page-stats" class="page">
+  <div class="card">
+    <h2>📈 Your progress</h2>
+    <div class="stat-grid">
+      <div class="stat"><b id="sBestScore">0</b><span>Best score</span></div>
+      <div class="stat"><b id="sBestWpm">0</b><span>Best WPM</span></div>
+      <div class="stat"><b id="sBestAcc">0%</b><span>Best accuracy</span></div>
+      <div class="stat"><b id="sPopped">0</b><span>Bubbles popped</span></div>
+      <div class="stat"><b id="sGames">0</b><span>Games played</span></div>
+      <div class="stat"><b id="sCombo">0</b><span>Best combo</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🏅 Badges</h2>
+    <div class="badges" id="badgeGrid"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Next goal</h2>
+    <div class="bar-label"><span id="goalLabel">Score 1000 points</span><span id="goalValue">0 / 1000</span></div>
+    <div class="bar-track"><div class="bar-fill" id="goalBar"></div></div>
+    <p class="hint" style="text-align:left;margin-top:14px">Every round makes you a little faster. Keep going! 💪</p>
+    <button class="btn btn-pink" id="resetBtn" style="margin-top:6px">Reset everything</button>
+  </div>
+</section>
+
+</main>
+
+<script src="script.js" defer></script>
+</body>
+</html>
