@@ -37,7 +37,6 @@
 ## 🚀 Live Demo
 
 👉 **[Play TypePop](https://ashutoshguptagh.github.io/typepop/)**
-*(Replace with your GitHub Pages URL)*
 
 ---
 
