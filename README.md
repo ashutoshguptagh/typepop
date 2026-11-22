@@ -36,7 +36,7 @@
 
 ## 🚀 Live Demo
 
-👉 **[Play TypePop](https://your-username.github.io/typepop/)**
+👉 **[Play TypePop](https://ashutoshguptagh.github.io/typepop/)**
 *(Replace with your GitHub Pages URL)*
 
 ---
